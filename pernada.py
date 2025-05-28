@@ -49,7 +49,7 @@ class SavedInfo(db_handler):
   def save_decision(self) -> None:
     sql = 'INSERT INTO game (point_1, point_2) VALUES (?,?)'
     self.cur.execute(sql,(point_1, point_2)
-
+                     
   def count_point() -> int:
     total_point_1 = list(self.cur.execute('SELECT SUM(point_1) AS total_points_1')).fetchone()[0]
     total_point_2 = list(self.cur.execute('SELECT SUM(point_2) AS total_points_2')).fetchone()[0]
