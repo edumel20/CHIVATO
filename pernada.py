@@ -1,10 +1,10 @@
 #######################
 import sqlite3
+from __future__ import annotations
 DB_PATH = ':memory:'
 
 #bloque base de datos
-
-class db_handler:
+class Db_Handler:
   def __init__(self, db_path: str =DB_PATH):
     self.con = sqlite3.connect(db_path)
     self.con.row_factory = sqlite3.Row
@@ -21,6 +21,20 @@ class db_handler:
     self.con.commit()
 
 #FUNCIONES
+class SavedInfo(db_handler):
+  def __init__(self):
+    super().__init__()
+    point_1, point_2 = point_round()
+    
+  def save_decision(self) -> None:
+    sql = 'INSERT INTO game (point_1, point_2) VALUES (?,?)'
+    self.cur.execute(sql,(point_1, point_2)
+                     
+  def count_point() -> int:
+    total_point_1 = list(self.cur.execute('SELECT SUM(point_1) AS total_points_1')).fetchone()[0]
+    total_point_2 = list(self.cur.execute('SELECT SUM(point_2) AS total_points_2')).fetchone()[0]
+    return int(total_point_1), int(total_point_2)
+    
 def decision(other_decision: bool) -> bool:
   match other_decision:
     case False:
@@ -41,19 +55,7 @@ def point_round(decision_1=True, decision_2=other_decision):
     case (False, True):
       return (0, 7)
 
-class SavedInfo(db_handler):
-  def __init__(self):
-    super().__init__()
-    point_1, point_2 = point_round()
-    
-  def save_decision(self) -> None:
-    sql = 'INSERT INTO game (point_1, point_2) VALUES (?,?)'
-    self.cur.execute(sql,(point_1, point_2)
-                     
-  def count_point() -> int:
-    total_point_1 = list(self.cur.execute('SELECT SUM(point_1) AS total_points_1')).fetchone()[0]
-    total_point_2 = list(self.cur.execute('SELECT SUM(point_2) AS total_points_2')).fetchone()[0]
-    return int(total_point_1), int(total_point_2)
+
 
 def winner() -> str:
   player1, player2 = save.count_point()
